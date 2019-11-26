@@ -22,3 +22,51 @@ and does the following:
 import sys
 import calendar
 from datetime import datetime
+
+
+def print_calendar(month=None, year=None):
+    if month:
+        try:
+            month = int(month)
+        except ValueError as e:
+            return e
+        except TypeError:
+            return 'Enter a number'
+    if year:
+        try:
+            year = int(year.strip('[]'))
+        except ValueError as e:
+            return e
+        except TypeError:
+            return 'Enter a number in brackets. i.e. "[5]"'
+
+    if not month and not year:
+        cal = calendar.TextCalendar()
+        year = datetime.now().year
+        month = datetime.now().month
+        cal = cal.formatmonth(year, month)
+        return cal
+
+    if not year:
+        cal = calendar.TextCalendar()
+        year = datetime.now().year
+        cal = cal.formatmonth(year, month)
+        return cal
+
+    else:
+        cal = calendar.TextCalendar()
+        cal = cal.formatmonth(year, month)
+        return cal
+
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+    month, year = None, None
+    if args:
+        if len(args) > 1:
+            month = args[0]
+            year = args[1]
+        else:
+            month = args[0]
+    print(print_calendar(month, year))
+
